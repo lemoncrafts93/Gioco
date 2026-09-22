@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070a0f"><meta name="description" content="FireWatch — monitoraggio satellitare degli hotspot in quasi tempo reale">
+<title>FireWatch — Live Fire Monitor</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="flame">⌁</div><div><b>FIREWATCH</b><small>LIVE FIRE INTELLIGENCE</small></div></div>
+  <div class="top-actions"><div class="connection"><i id="connDot"></i><span id="conn">Connecting</span></div><button id="locate" title="Usa la mia posizione">◎</button></div>
+</header>
+
+<div class="layout">
+<aside class="panel">
+  <div class="panel-head"><div><span class="kicker">SATELLITE MONITOR</span><h1>Incendi<br><span>in tempo quasi reale</span></h1></div><button id="collapse" class="icon">‹</button></div>
+  <p class="intro">Hotspot termici rilevati dai satelliti VIIRS. I dati vengono aggiornati automaticamente.</p>
+
+  <div class="controls">
+    <label>Finestra temporale<select id="days"><option value="1">24 ore</option><option value="2">48 ore</option><option value="3">3 giorni</option><option value="5">5 giorni</option></select></label>
+    <label>Satelliti<select id="source"><option value="VIIRS_NOAA21_NRT,VIIRS_NOAA20_NRT">NOAA-20 + NOAA-21</option><option value="VIIRS_NOAA21_NRT">NOAA-21</option><option value="VIIRS_NOAA20_NRT">NOAA-20</option></select></label>
+    <label>Intensità minima <div class="range-line"><input id="frp" type="range" min="0" max="150" value="0" step="5"><b id="frpValue">0 MW</b></div></label>
+    <label class="toggle-row"><span>Solo alta confidenza</span><input id="confidence" type="checkbox"><i></i></label>
+    <button id="refresh" class="main-btn">↻ &nbsp; Aggiorna ora</button>
+  </div>
+
+  <div class="metrics">
+    <div><span>HOTSPOT</span><strong id="count">—</strong></div>
+    <div><span>FRP TOTALE</span><strong id="total">—</strong><em>MW</em></div>
+    <div><span>ALTA INTENSITÀ</span><strong id="high">—</strong></div>
+    <div><span>ULTIME 6H</span><strong id="recent">—</strong></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span>ULTIME RILEVAZIONI</span><button id="clearSelection">Mostra tutte</button></div>
+    <div id="feed" class="feed"></div>
+  </div>
+
+  <div class="legend">
+    <div class="section-title"><span>LEGENDA FRP</span></div>
+    <div class="legend-item"><i style="--c:#ffd166"></i><span>&lt; 10 MW</span></div>
+    <div class="legend-item"><i style="--c:#ff9f43"></i><span>10–50 MW</span></div>
+    <div class="legend-item"><i style="--c:#ff6547"></i><span>50–150 MW</span></div>
+    <div class="legend-item"><i style="--c:#ff244e"></i><span>&gt; 150 MW</span></div>
+  </div>
+
+  <footer><span>NASA LANCE / FIRMS · VIIRS NRT</span><span id="updated">—</span></footer>
+</aside>
+
+<main class="map-area">
+  <div id="map"></div>
+  <div class="map-toolbar">
+    <button class="active" id="btnHotspots">● Hotspot</button><button id="btnHeat">◌ Heatmap</button>
+    <button id="btnItaly">⌖ Italia</button>
+    <button id="btnFull">⛶</button>
+  </div>
+  <div class="map-info"><span class="live"><i></i> LIVE</span><b id="mapCount">—</b><span id="mapTime">—</span></div>
+  <div id="loading" class="loading"><div></div><span>Caricamento dati satellitari…</span></div>
+  <div id="error" class="error hidden"></div>
+</main>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="/app.js"></script>
+</body></html>
